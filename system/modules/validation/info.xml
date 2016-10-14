@@ -1,0 +1,60 @@
+<module>
+    <name>Validation</name>
+    <description>This class forms the base class for validation and sanitization of variables from userland. The class provides many standard validation for any type of input from POST, GET, CLI etc. The class accepts input via the addRule method, or will accept and array of rules with the addRules() method.
+<br>
+Upon validation, variables are checked and errors are stored in an errors array while variables that pass validation are stored in the sanitized array. This is ideal if you need to report back errors from input, such as a form, and at the same time, re-populate form fields that have passed validation.
+<br>
+This release adds method chaining to the addRule() method and also provides a trim option to trim variables that are submitted.</description>
+    <example>
+        <init>$validation=module('validation');</init>
+        <return>$validation will be an object with methods for validating data.</return>
+        <code>
+            <pre>
+<?php
+
+    $POST = array(
+            'name' => 'Fred Scuttle',
+            'age' => 42,
+            'contact_email'=>'             fred@example.com',
+            'url'=>'http://phpro.org');
+
+    /*** an array of rules ***/
+    $rules_array = array(
+        'name'=>array('type'=>'string',  'required'=>true, 'min'=>30, 'max'=>50, 'trim'=>true),
+        'age'=>array('type'=>'numeric', 'required'=>true, 'min'=>1, 'max'=>120, 'trim'=>true));
+
+    /*** a new validation instance ***/
+    $val = new validation;
+
+    /*** use POST as the source ***/
+    $val->addSource($POST);
+
+    /*** add a form field rule ***/
+    $val->addRule('contact_email', 'email', true, 1, 255, true)
+        ->addRule('url', 'url', false, 10, 150, false);
+
+    /*** add an array of rules ***/
+    $val->addRules($rules_array);
+
+    /*** run the validation rules ***/
+    $val->run();
+
+    /*** if there are errors show them ***/
+    if(sizeof($val->errors) > 0)
+    {
+        print_r($val->errors);
+    }
+
+    /*** show the array of validated and sanitized variables ***/
+    print_r($val->sanitized);
+    
+?>
+            </pre>
+        </code>
+        
+    </example>
+</module>
+<author>
+    <name>phpro.org</name>
+    <web>http://www.phpro.org/classes/Validation-Class.html</web>
+</author>
