@@ -17,14 +17,14 @@
         <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     </head>
     <body>
-
+    <?php require_once APPPATH.'../themes/generated/menu.php';?>
         <div class="container">
-            <h2>Manage category</h2>
+            <h2>Categories</h2>
             <hr>
             
             <div class="row">
                 <div class="col-sm-12">
-                    <h4>Filter categorys</h4>
+                    <h4>Filter categories</h4>
                     <form id="filter_search" class="form-inline" action="<?php echo $url->site_url('category');?>" method="get">
                                                  <input type="search" class="filterItem form-control" name="name" value="<?php echo @$_GET['name'];?>" placeholder="Search name">
                                                      <input type="search" class="filterItem form-control" name="active" value="<?php echo @$_GET['active'];?>" placeholder="Search active">
@@ -54,7 +54,7 @@
                         
                         <tr>
                             <th>_id</th>
-                                                        <th>name</th>                            <th>active</th>
+                                                        <th>Category name</th>                            <th>Is active?</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -62,7 +62,8 @@
                         <?php foreach ($categorys as $category) { ?>
                             <tr>
                                 <td><?php echo $category['_id']; ?></td>
-                                                                <td><?php echo $category['name']; ?></td>                            <td><?php echo $category['active']; ?></td>
+                                <td><?php echo $category['name']; ?></td>                            
+                                <td><?php if($category['active']){echo '<span style="color:green;">Yes</span>'; }else{ echo '<span style="color:red;">No</span>';} ?></td>
 
                                 <td>
                                     <a href="<?php echo $url->site_url('category/view/' . $category['_id']); ?>"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
