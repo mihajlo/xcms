@@ -65,9 +65,11 @@ if (!$url->segment(2) || $url->segment(2) == 'action') {
 
 
 else if ($url->segment(2) == 'add') {
+    $parents=$storage->get('page');
     $view->load("themes/generated/page/add.php", [
         'url' => $url,
-        'action_msg' => $action_message
+        'action_msg' => $action_message,
+        'parents'=>$parents
     ]);
 }
 

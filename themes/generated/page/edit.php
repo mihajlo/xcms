@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     </head>
     <body>
-
+        <?php require_once APPPATH.'../themes/generated/menu.php';?>
         <div class="container">
 
             <h2>Edit page</h2>  

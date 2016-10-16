@@ -17,7 +17,7 @@
         <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     </head>
     <body>
-
+        <?php require_once APPPATH.'../themes/generated/menu.php';?>
         <div class="container">
             <h2>Manage page</h2>
             <hr>

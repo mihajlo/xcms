@@ -17,9 +17,9 @@
         <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     </head>
     <body>
-
+        <?php require_once APPPATH.'../themes/generated/menu.php';?>
         <div class="container">
-            <h2>Manage user</h2>
+            <h2>Manage users</h2>
             <hr>
             
             <div class="row">
@@ -28,14 +28,9 @@
                     <form id="filter_search" class="form-inline" action="<?php echo $url->site_url('user');?>" method="get">
                                                  <input type="search" class="filterItem form-control" name="type" value="<?php echo @$_GET['type'];?>" placeholder="Search type">
                                                      <input type="search" class="filterItem form-control" name="username" value="<?php echo @$_GET['username'];?>" placeholder="Search username">
-                                                     <input type="search" class="filterItem form-control" name="password" value="<?php echo @$_GET['password'];?>" placeholder="Search password">
-                                                     <input type="search" class="filterItem form-control" name="display_name" value="<?php echo @$_GET['display_name'];?>" placeholder="Search display_name">
+                                                     <input type="search" class="filterItem form-control" name="display_name" value="<?php echo @$_GET['display_name'];?>" placeholder="Search display name">
                                                      <input type="search" class="filterItem form-control" name="email" value="<?php echo @$_GET['email'];?>" placeholder="Search email">
-                                                     <input type="search" class="filterItem form-control" name="created" value="<?php echo @$_GET['created'];?>" placeholder="Search created">
-                                                     <input type="search" class="filterItem form-control" name="updated" value="<?php echo @$_GET['updated'];?>" placeholder="Search updated">
-                                                     <input type="search" class="filterItem form-control" name="active" value="<?php echo @$_GET['active'];?>" placeholder="Search active">
-                                                     <input type="search" class="filterItem form-control" name="banned" value="<?php echo @$_GET['banned'];?>" placeholder="Search banned">
-                            
+                                                     
                         <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button> <a href="<?php echo $url->site_url('user') ?>" class="btn btn-default"><span class="glyphicon glyphicon-erase"></span> Clear filters</a>
                     </form>
                 </div>
@@ -61,7 +56,13 @@
                         
                         <tr>
                             <th>_id</th>
-                                                        <th>type</th>                            <th>username</th>                            <th>password</th>                            <th>display_name</th>                            <th>email</th>                            <th>created</th>                            <th>updated</th>                            <th>active</th>                            <th>banned</th>
+                                                        
+                            <th>User type</th>                            
+                            <th>Username</th>                            
+                            <th>Display name</th>                            
+                            <th>Email</th>                          
+                            <th>Is active?</th>                            
+                            <th>Is banned?</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -69,7 +70,13 @@
                         <?php foreach ($users as $user) { ?>
                             <tr>
                                 <td><?php echo $user['_id']; ?></td>
-                                                                <td><?php echo $user['type']; ?></td>                            <td><?php echo $user['username']; ?></td>                            <td><?php echo $user['password']; ?></td>                            <td><?php echo $user['display_name']; ?></td>                            <td><?php echo $user['email']; ?></td>                            <td><?php echo $user['created']; ?></td>                            <td><?php echo $user['updated']; ?></td>                            <td><?php echo $user['active']; ?></td>                            <td><?php echo $user['banned']; ?></td>
+                                                                
+                                <td><a href="<?=$url->site_url('user?type='.$user['type']);?>"><?php echo $user['type']; ?></a></td>                            
+                                <td><?php echo $user['username']; ?></td>                          
+                                <td><?php echo $user['display_name']; ?></td>                            
+                                <td><?php echo $user['email']; ?></td>                          
+                                <td><?php if($user['active']){ echo '<span style="color:green;">Yes</span>';}else{echo '<span style="color:red;">No</span>';} ?></td>                            
+                                <td><?php if($user['banned']){ echo '<span style="color:red;">Yes</span>';}else{echo '<span style="color:green;">No</span>';} ?></td>
 
                                 <td>
                                     <a href="<?php echo $url->site_url('user/view/' . $user['_id']); ?>"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>

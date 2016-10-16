@@ -7,12 +7,12 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     </head>
     <body>
-
+        <?php require_once APPPATH.'../themes/generated/menu.php';?>
         <div class="container">
             <h2>View tag</h2> 
                 
                             <div class="form-group">
-                    <label>name:</label>
+                    <label>Tag name:</label>
                     <span><?php echo $tag['name'];?></span>
                 </div>            <a href="<?php echo $url->site_url('tag/edit/'.$tag['_id']); ?>" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
             <a href="<?php echo $url->site_url('tag/delete/'.$tag['_id']); ?>" onclick="return confirm('are you sure to delete')" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Delete</a>

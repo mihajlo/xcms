@@ -50,10 +50,10 @@ if (!$url->segment(2) || $url->segment(2) == 'action') {
                 $search_parms[$search_k.'%']=$search_v;
             }
         }
-        $results=$storage->get('comment',$search_parms);
+        $results=$storage->get('comment',$search_parms,['user_id'=>['user','_id']]);
     }
     else{
-        $results=$storage->get('comment');
+        $results=$storage->get('comment',[],['user_id'=>['user','_id']]);
     }
     $view->load("themes/generated/comment/list.php", [
         'url' => $url,
@@ -65,24 +65,28 @@ if (!$url->segment(2) || $url->segment(2) == 'action') {
 
 
 else if ($url->segment(2) == 'add') {
+    $users=$storage->get('user',['active'=>1,'banned'=>NULL]);
     $view->load("themes/generated/comment/add.php", [
         'url' => $url,
-        'action_msg' => $action_message
+        'action_msg' => $action_message,
+        'users'=>$users
     ]);
 }
 
 else if ($url->segment(2) == 'edit' && $url->segment(3)) {
     $comment=$storage->get('comment',['_id'=>$url->segment(3)]);
     $comment=$comment[0];
+    $users=$storage->get('user',['active'=>1,'banned'=>NULL]);
     $view->load("themes/generated/comment/edit.php", [
         'url' => $url,
         'action_msg' => $action_message,
-        'comment'=>$comment
+        'comment'=>$comment,
+        'users'=>$users
     ]);
 }
 
 else if ($url->segment(2) == 'view' && $url->segment(3)) {
-    $comment=$storage->get('comment',['_id'=>$url->segment(3)]);
+    $comment=$storage->get('comment',['_id'=>$url->segment(3)],['user_id'=>['user','_id']]);
     $comment=$comment[0];
     $view->load("themes/generated/comment/view.php", [
         'url' => $url,

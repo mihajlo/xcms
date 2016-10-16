@@ -17,9 +17,9 @@
         <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     </head>
     <body>
-
+        <?php require_once APPPATH.'../themes/generated/menu.php';?>
         <div class="container">
-            <h2>Manage tag</h2>
+            <h2>Tags</h2>
             <hr>
             
             <div class="row">
@@ -53,7 +53,7 @@
                         
                         <tr>
                             <th>_id</th>
-                                                        <th>name</th>
+                                                        <th>Tag name</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
