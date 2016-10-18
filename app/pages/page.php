@@ -50,10 +50,10 @@ if (!$url->segment(2) || $url->segment(2) == 'action') {
                 $search_parms[$search_k.'%']=$search_v;
             }
         }
-        $results=$storage->get('page',$search_parms);
+        $results=$storage->get('page',$search_parms,['parent'=>['page','_id']]);
     }
     else{
-        $results=$storage->get('page');
+        $results=$storage->get('page',[],['parent'=>['page','_id']]);
     }
     $view->load("themes/generated/page/list.php", [
         'url' => $url,
@@ -65,30 +65,33 @@ if (!$url->segment(2) || $url->segment(2) == 'action') {
 
 
 else if ($url->segment(2) == 'add') {
-    $parents=$storage->get('page');
+    $parents=$storage->get('page',['type'=>'page']);
+    $categories=$storage->get('category');
+    $tags=$storage->get('tag');
     $view->load("themes/generated/page/add.php", [
         'url' => $url,
         'action_msg' => $action_message,
-        'parents'=>$parents
+        'parents'=>$parents,
+        'jquery'=>module('jquery'),
+        'categories'=>$categories,
+        'tags'=>$tags
     ]);
 }
 
 else if ($url->segment(2) == 'edit' && $url->segment(3)) {
     $page=$storage->get('page',['_id'=>$url->segment(3)]);
     $page=$page[0];
+    
+    $parents=$storage->get('page',['type'=>'page']);
+    $categories=$storage->get('category');
+    $tags=$storage->get('tag');
     $view->load("themes/generated/page/edit.php", [
         'url' => $url,
         'action_msg' => $action_message,
-        'page'=>$page
-    ]);
-}
-
-else if ($url->segment(2) == 'view' && $url->segment(3)) {
-    $page=$storage->get('page',['_id'=>$url->segment(3)]);
-    $page=$page[0];
-    $view->load("themes/generated/page/view.php", [
-        'url' => $url,
-        'action_msg' => $action_message,
-        'page'=>$page
+        'page'=>$page,
+        'parents'=>$parents,
+        'jquery'=>module('jquery'),
+        'categories'=>$categories,
+        'tags'=>$tags
     ]);
 }

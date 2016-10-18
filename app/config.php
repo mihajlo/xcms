@@ -32,6 +32,10 @@ $config['default']=array(
         'admin',
         'user'
     ),
+    'page_types'=>array(
+        'page'=>'Page (default)',
+        'post'=>'Blog post'
+    ),
     
     'theme_path'=>'themes/simple/'
     

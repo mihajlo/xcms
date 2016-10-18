@@ -19,23 +19,19 @@
     <body>
         <?php require_once APPPATH.'../themes/generated/menu.php';?>
         <div class="container">
-            <h2>Manage page</h2>
+            <h2>Manage pages</h2>
             <hr>
             
             <div class="row">
                 <div class="col-sm-12">
                     <h4>Filter pages</h4>
                     <form id="filter_search" class="form-inline" action="<?php echo $url->site_url('page');?>" method="get">
-                                                 <input type="search" class="filterItem form-control" name="parent" value="<?php echo @$_GET['parent'];?>" placeholder="Search parent">
-                                                     <input type="search" class="filterItem form-control" name="alias" value="<?php echo @$_GET['alias'];?>" placeholder="Search alias">
-                                                     <input type="search" class="filterItem form-control" name="title" value="<?php echo @$_GET['title'];?>" placeholder="Search title">
-                                                     <input type="search" class="filterItem form-control" name="description" value="<?php echo @$_GET['description'];?>" placeholder="Search description">
-                                                     <input type="search" class="filterItem form-control" name="body" value="<?php echo @$_GET['body'];?>" placeholder="Search body">
-                                                     <input type="search" class="filterItem form-control" name="photo" value="<?php echo @$_GET['photo'];?>" placeholder="Search photo">
-                                                     <input type="search" class="filterItem form-control" name="private" value="<?php echo @$_GET['private'];?>" placeholder="Search private">
-                                                     <input type="search" class="filterItem form-control" name="created" value="<?php echo @$_GET['created'];?>" placeholder="Search created">
-                                                     <input type="search" class="filterItem form-control" name="updated" value="<?php echo @$_GET['updated'];?>" placeholder="Search updated">
-                                                     <input type="search" class="filterItem form-control" name="active" value="<?php echo @$_GET['active'];?>" placeholder="Search active">
+                                                 
+                                                     <input type="search" class="filterItem form-control" name="title" value="<?php echo @$_GET['title'];?>" placeholder="Search in Title">
+                                                     <input type="search" class="filterItem form-control" name="alias" value="<?php echo @$_GET['alias'];?>" placeholder="Search in Alias">
+                                                     <input type="search" class="filterItem form-control" name="description" value="<?php echo @$_GET['description'];?>" placeholder="Search in Description">
+                                                     <input type="search" class="filterItem form-control" name="body" value="<?php echo @$_GET['body'];?>" placeholder="Search in Body">
+                                                     
                             
                         <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button> <a href="<?php echo $url->site_url('page') ?>" class="btn btn-default"><span class="glyphicon glyphicon-erase"></span> Clear filters</a>
                     </form>
@@ -62,7 +58,13 @@
                         
                         <tr>
                             <th>_id</th>
-                                                        <th>parent</th>                            <th>alias</th>                            <th>title</th>                            <th>description</th>                            <th>body</th>                            <th>photo</th>                            <th>private</th>                            <th>created</th>                            <th>updated</th>                            <th>active</th>
+                            <th>Type</th>          
+                            <th>Parent page</th>                               
+                            <th>Title</th>                            
+                            <th>Alias (url)</th>                         
+                            <th>Description</th>                             
+                            <th>Is private?</th>                           
+                            <th>Is active?</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -70,14 +72,19 @@
                         <?php foreach ($pages as $page) { ?>
                             <tr>
                                 <td><?php echo $page['_id']; ?></td>
-                                                                <td><?php echo $page['parent']; ?></td>                            <td><?php echo $page['alias']; ?></td>                            <td><?php echo $page['title']; ?></td>                            <td><?php echo $page['description']; ?></td>                            <td><?php echo $page['body']; ?></td>                            <td><?php echo $page['photo']; ?></td>                            <td><?php echo $page['private']; ?></td>                            <td><?php echo $page['created']; ?></td>                            <td><?php echo $page['updated']; ?></td>                            <td><?php echo $page['active']; ?></td>
-
+                                                                
+                                <td><a href="<?php echo $url->site_url('page?type='.$page['type']); ?>"><?php echo $page['type']; ?></a></td>
+                                <td><?php if($page['parent']){ echo $page['parent']['title'].' ('.$page['parent']['alias'].')'; } ?></td>                            
+                                <td><?php echo $page['title']; ?></td> 
+                                <td><a target="_blank" href="<?php echo $url->site_url($page['alias']); ?>" title="<?php echo $url->site_url($page['alias']); ?>">/<?php echo $page['alias']; ?></a></td>    
+                                <td><?php echo substr($page['description'],0,40); ?>...</td>                               
+                                <td><?php if($page['private']){ echo '<span style="color:orange;">Private</span>';}else{echo '<span style="color:blue;">Public</span>';} ?></td>                                     
+                                <td><?php if($page['active']){ echo '<span style="color:green;">Yes</span>';}else{echo '<span style="color:red;">No</span>';} ?></td>
                                 <td>
-                                    <a href="<?php echo $url->site_url('page/view/' . $page['_id']); ?>"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
+                                    <a target="_blank" href="<?php echo $url->site_url($page['alias']); ?>"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Preview</a>
                                     <a href="<?php echo $url->site_url('page/edit/' . $page['_id']); ?>"  class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                                     <a href="<?php echo $url->site_url('page/delete/' . $page['_id']); ?>"  class="btn btn-danger btn-xs" onclick="return confirm('are you sure to delete')"><span class="glyphicon glyphicon-remove"></span> Delete</a>
                                 </td>
-
                             </tr>
                         <?php } ?>
                     </tbody>

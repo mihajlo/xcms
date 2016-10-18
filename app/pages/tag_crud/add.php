@@ -6,6 +6,10 @@ if (isset($_POST['name'])) {
     $validation->addRule('name', 'string', true, 1, 255, true);
 
     $validation->run();
+    
+    if(count($storage->get('tag',['name'=>@$_POST['name']]))>0){
+        $validation->errors['name']='Tag "'.@$_POST['name'].'" already exist.';
+    };
 
     if (count($validation->errors) > 0) {
         foreach($validation->errors as $error){

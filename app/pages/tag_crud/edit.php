@@ -8,6 +8,7 @@ if (isset($_POST['name']) && $url->segment(3)) {
 
 
     $validation->run();
+    
 
     if (count($validation->errors) > 0) {
         foreach ($validation->errors as $error) {

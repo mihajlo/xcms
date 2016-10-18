@@ -9,7 +9,7 @@
     <body>
         <?php require_once APPPATH.'../themes/generated/menu.php';?>
         <div class="container">
-            <h2>View page</h2> 
+            <h2>Page details</h2> 
                 
                             <div class="form-group">
                     <label>parent:</label>

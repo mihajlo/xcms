@@ -1,23 +1,19 @@
 <?php
 
-if (isset($_POST['parent']) && isset($_POST['alias']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['body']) && isset($_POST['photo']) && isset($_POST['private']) && isset($_POST['created']) && isset($_POST['updated']) && isset($_POST['active']) && $url->segment(3)) {
+if (isset($_POST['parent']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['body']) && isset($_POST['photo']) && isset($_POST['private']) && isset($_POST['active']) && $url->segment(3)) {
 
     $validation->addSource($_POST);
-
-    $validation->addRule('parent', 'string', true, 1, 255, true);
-    $validation->addRule('alias', 'string', true, 1, 255, true);
+    
     $validation->addRule('title', 'string', true, 1, 255, true);
     $validation->addRule('description', 'string', true, 1, 255, true);
-    $validation->addRule('body', 'string', true, 1, 255, true);
-    $validation->addRule('photo', 'string', true, 1, 255, true);
-    $validation->addRule('private', 'string', true, 1, 255, true);
-    $validation->addRule('created', 'string', true, 1, 255, true);
-    $validation->addRule('updated', 'string', true, 1, 255, true);
-    $validation->addRule('active', 'string', true, 1, 255, true);
-
 
     $validation->run();
 
+    
+    if(strlen(@$_POST['type'])<1){
+        $validation->errors['type']='Page type is required';
+    };
+    
     if (count($validation->errors) > 0) {
         foreach ($validation->errors as $error) {
             $action_message .= '<p>' . $error . '</p>';
@@ -25,15 +21,18 @@ if (isset($_POST['parent']) && isset($_POST['alias']) && isset($_POST['title']) 
     } else {
         $storage->update(
                 'page', [
+                    'user_id' => 1,
+                    'type' => trim(addslashes(strip_tags($_POST['type']))),
+                    'categories' => implode(',',$_POST['categories']),
+                    'tags' => implode(',',$_POST['tags']),
                     'parent' => trim(addslashes(strip_tags($_POST['parent']))),
-                    'alias' => trim(addslashes(strip_tags($_POST['alias']))),
                     'title' => trim(addslashes(strip_tags($_POST['title']))),
                     'description' => trim(addslashes(strip_tags($_POST['description']))),
-                    'body' => trim(addslashes(strip_tags($_POST['body']))),
+                    'body' => $_POST['body'],
                     'photo' => trim(addslashes(strip_tags($_POST['photo']))),
+                    'comments_allowed' => trim(addslashes(strip_tags($_POST['comments_allowed']))),
                     'private' => trim(addslashes(strip_tags($_POST['private']))),
-                    'created' => trim(addslashes(strip_tags($_POST['created']))),
-                    'updated' => trim(addslashes(strip_tags($_POST['updated']))),
+                    'updated' => date('Y-m-d H:i:s'),
                     'active' => trim(addslashes(strip_tags($_POST['active']))),
 
                 ], 
