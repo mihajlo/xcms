@@ -50,10 +50,10 @@ if (!$url->segment(2) || $url->segment(2) == 'action') {
                 $search_parms[$search_k.'%']=$search_v;
             }
         }
-        $results=$storage->get('menu',$search_parms);
+        $results=$storage->get('menu',$search_parms,['parent'=>['menu','_id']]);
     }
     else{
-        $results=$storage->get('menu');
+        $results=$storage->get('menu',[],['parent'=>['menu','_id']]);
     }
     $view->load("themes/generated/menu/list.php", [
         'url' => $url,
@@ -67,7 +67,8 @@ if (!$url->segment(2) || $url->segment(2) == 'action') {
 else if ($url->segment(2) == 'add') {
     $view->load("themes/generated/menu/add.php", [
         'url' => $url,
-        'action_msg' => $action_message
+        'action_msg' => $action_message,
+        'menu_items'=>$storage->get('menu')
     ]);
 }
 
@@ -77,7 +78,8 @@ else if ($url->segment(2) == 'edit' && $url->segment(3)) {
     $view->load("themes/generated/menu/edit.php", [
         'url' => $url,
         'action_msg' => $action_message,
-        'menu'=>$menu
+        'menu'=>$menu,
+        'menu_items'=>$storage->get('menu')
     ]);
 }
 

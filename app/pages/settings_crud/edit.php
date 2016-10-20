@@ -4,11 +4,6 @@ if (isset($_POST['site_name']) && isset($_POST['site_slogan']) && isset($_POST['
 
     $validation->addSource($_POST);
 
-    $validation->addRule('site_name', 'string', true, 1, 255, true);
-    $validation->addRule('site_slogan', 'string', true, 1, 255, true);
-    $validation->addRule('copyright', 'string', true, 1, 255, true);
-    $validation->addRule('active', 'string', true, 1, 255, true);
-
 
     $validation->run();
 
@@ -25,8 +20,8 @@ if (isset($_POST['site_name']) && isset($_POST['site_slogan']) && isset($_POST['
                     'active' => trim(addslashes(strip_tags($_POST['active']))),
 
                 ], 
-                [_id => $url->segment(3)]
+                [_id => 1]
         );
-        $url->redirect('settings/action/edit');
+        //$url->redirect('settings/edit/site');
     }
 }

@@ -26,12 +26,9 @@
                 <div class="col-sm-12">
                     <h4>Filter menus</h4>
                     <form id="filter_search" class="form-inline" action="<?php echo $url->site_url('menu');?>" method="get">
-                                                 <input type="search" class="filterItem form-control" name="parent" value="<?php echo @$_GET['parent'];?>" placeholder="Search parent">
-                                                     <input type="search" class="filterItem form-control" name="url" value="<?php echo @$_GET['url'];?>" placeholder="Search url">
-                                                     <input type="search" class="filterItem form-control" name="name" value="<?php echo @$_GET['name'];?>" placeholder="Search name">
-                                                     <input type="search" class="filterItem form-control" name="target" value="<?php echo @$_GET['target'];?>" placeholder="Search target">
-                                                     <input type="search" class="filterItem form-control" name="private" value="<?php echo @$_GET['private'];?>" placeholder="Search private">
-                                                     <input type="search" class="filterItem form-control" name="order" value="<?php echo @$_GET['order'];?>" placeholder="Search order">
+                                                     <input type="search" class="filterItem form-control" name="name" value="<?php echo @$_GET['name'];?>" placeholder="Search in Menu Item">
+                                                     <input type="search" class="filterItem form-control" name="url" value="<?php echo @$_GET['url'];?>" placeholder="Search in URL">
+                                                     
                             
                         <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button> <a href="<?php echo $url->site_url('menu') ?>" class="btn btn-default"><span class="glyphicon glyphicon-erase"></span> Clear filters</a>
                     </form>
@@ -57,19 +54,26 @@
                         
                         
                         <tr>
-                            <th>_id</th>
-                                                        <th>parent</th>                            <th>url</th>                            <th>name</th>                            <th>target</th>                            <th>private</th>                            <th>order</th>
+                            <th>_id</th>                         
+                            <th>Menu item</th>                           
+                            <th>URL</th>                             
+                            <th>Target</th>                            
+                            <th>Private</th>                            
+                            <th>Order score</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($menus as $menu) { ?>
                             <tr>
-                                <td><?php echo $menu['_id']; ?></td>
-                                                                <td><?php echo $menu['parent']; ?></td>                            <td><?php echo $menu['url']; ?></td>                            <td><?php echo $menu['name']; ?></td>                            <td><?php echo $menu['target']; ?></td>                            <td><?php echo $menu['private']; ?></td>                            <td><?php echo $menu['order']; ?></td>
+                                <td><?php echo $menu['_id']; ?></td>                        
+                                <td><?php if($menu['parent']){echo $menu['parent']['name'].'<br>&nbsp; &raquo; '.$menu['name'];}else{echo $menu['name'];} ?></td>                           
+                                <td><a href="<?php echo $menu['url']; ?>" target="_blank"><?php echo $menu['url']; ?></a></td>                            
+                                <td><?php echo $menu['target']; ?></td>                            
+                                <td><?php if($menu['private']){echo '<span style="color:orange;">Private</span>';}else{echo '<span style="color:blue;">Public</span>';}; ?></td>                            
+                                <td><?php echo $menu['order']; ?></td>
 
                                 <td>
-                                    <a href="<?php echo $url->site_url('menu/view/' . $menu['_id']); ?>"  class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
                                     <a href="<?php echo $url->site_url('menu/edit/' . $menu['_id']); ?>"  class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                                     <a href="<?php echo $url->site_url('menu/delete/' . $menu['_id']); ?>"  class="btn btn-danger btn-xs" onclick="return confirm('are you sure to delete')"><span class="glyphicon glyphicon-remove"></span> Delete</a>
                                 </td>
