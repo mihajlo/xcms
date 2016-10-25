@@ -186,7 +186,7 @@
                             <option value="1">Yes</option>
                             <option value="0" <?php if(isset($page['active']) && !$page['active']){echo 'selected="selected"';}?>>No</option>
                     </select>
-                </div>                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Insert</button>
+                </div>                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Save</button>
                 <a href="<?php echo $url->site_url('page') ?>" class="btn btn-default"><span class="glyphicon glyphicon-ban-circle"></span> Cancel</a>
             </form>
         </div>

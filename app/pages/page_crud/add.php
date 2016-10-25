@@ -24,7 +24,19 @@ if (isset($_POST['parent']) && isset($_POST['alias']) && isset($_POST['title']) 
         $validation->errors['alias']='Page with alias "'.@$_POST['alias'].'" already exist.';
     };
     
-    $reserved_pages=['404','category','comment','home','menu','page','settings','tag','user','xcrud','node'];
+    $reserved_pages= scandir(APPPATH . '/pages/');
+    unset($reserved_pages[0]);
+    unset($reserved_pages[1]);
+    $reserved_pages= array_values($reserved_pages);
+    $r_pages=[];
+    
+    foreach($reserved_pages as $p){
+        if(!is_dir(APPPATH . '/pages/'.$p)){
+           $r_pages[]= str_replace('.php', '', $p);
+        }
+    }
+    $reserved_pages=$r_pages;
+    //$reserved_pages=['404','category','comment','home','menu','page','settings','tag','user','xcrud','node'];
     if(in_array(trim($_POST['alias']),$reserved_pages)){
         $validation->errors['alias']='These strings for alias are reserved: '.implode(', ',$reserved_pages);
     }

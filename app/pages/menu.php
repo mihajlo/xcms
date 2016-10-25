@@ -1,5 +1,6 @@
 <?php
-
+$auth=module('auth');
+$auth->access(['admin']);
 //init "view" module
 $view = module('view');
 //init "url" module

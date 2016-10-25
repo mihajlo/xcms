@@ -22,6 +22,5 @@ if (isset($_POST['site_name']) && isset($_POST['site_slogan']) && isset($_POST['
                 ], 
                 [_id => 1]
         );
-        //$url->redirect('settings/edit/site');
     }
 }
