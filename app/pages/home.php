@@ -2,9 +2,8 @@
 $view = module('view');
 $url=module('url');
 
-$view->load($config['theme_path'].'home_page.php',
+$view->load($config['theme_path'].'home_view.php',
         [
-            'hmodule'=>module('header'),
-            'documentation_link'=>'https://xmodule.eco.mk/documentation'
+            'url'=>$url
         ]
     );

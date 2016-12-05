@@ -37,7 +37,7 @@ $config['default']=array(
         'post'=>'Blog post'
     ),
     
-    'theme_path'=>'themes/simple/'
+    'theme_path'=>'themes/virtuoso/'
     
 );
 

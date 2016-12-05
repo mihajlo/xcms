@@ -21,7 +21,19 @@ function load_configuration($conf = false) {
         require_once APPPATH . '/pages/' . $config['page'] . '.php';
     } else {
         if (!@include_once(APPPATH . '/pages/' . @$url->segment(1) . '.php')) {
-            require_once APPPATH . '/pages/' . $config['page404'] . '.php';
+            $storage=module('storage');
+            $results=$storage->get(
+                'page',
+                [
+                    'alias'=>@$url->segment(1)
+                ]
+            );
+            if(!$results){
+                @include_once APPPATH . '/pages/' . $config['page404'] . '.php';
+            }
+            else{
+                @include_once APPPATH . '/pages/node.php';
+            }
         }
     }
 }
